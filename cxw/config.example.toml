@@ -1,0 +1,24 @@
+[network]
+protocol = "https"
+host = "app-api.zjol.com.cn"
+
+[network.interceptors]
+signature_salt = "cK1!dJ0&aA0"
+
+[device]
+[device.headers]
+user-agent = ""
+custom-user-agent = ""
+
+[user]
+session-id = ""
+account-id = ""
+
+[answer]
+location = ""
+
+[bot]
+[bot.lark] # 飞书
+# optional
+webhook = ""
+secret = ""
