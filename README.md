@@ -34,7 +34,7 @@ Another script for University Task.
    [bot]
    [bot.lark]                                          # 可选, 使用飞书群组自定义机器人 
    webhook = "https://open.feishu.cn/open-apis/bot/v2/hook/***"
-   secret = "7NzsOQPZMtgjVvPjEQnQtf"
+   secret = ""
    ```
 
 4. Run the script.
