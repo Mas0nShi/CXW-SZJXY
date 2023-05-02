@@ -6,11 +6,14 @@ host = "app-api.zjol.com.cn"
 signature_salt = "cK1!dJ0&aA0"
 
 [device]
+device-id = ""
+
 [device.headers]
 user-agent = ""
 custom-user-agent = ""
 
 [user]
+user-id = ""
 session-id = ""
 account-id = ""
 
