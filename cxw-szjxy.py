@@ -1,18 +1,20 @@
 import time
 import random
-from cxw.modules.task import get_task_lists, answer_info, submit_answers, answer_result, AnswerInfo
+import argparse
+from cxw.modules.task import get_task_lists, answer_info, submit_answers, answer_result, AnswerInfo, checkdata
 from cxw.lib.config import LARK
 from cxw.modules.lark import bot
 import tqdm
 
-def tasks():
-    task_list = list(get_task_lists())
-    print(f'共有{len(task_list)}个任务')
 
+def answers():
+    task_list = list(get_task_lists())
     if len(task_list) == 0:
-        print('直接退出')
+        print('No tasks found')
         return
-    print('开始答题')
+
+    print(f'Total tasks: {len(task_list)}')
+    print('Start automatic answering...')
     print(f'{"标题":<30} {"答对数量":<10} {"准确率":<10}\n')
 
     for item in tqdm.tqdm(task_list):
@@ -36,5 +38,22 @@ def tasks():
     print('答题结束')
 
 
+def rank():
+    score, all_rank, error_num, right_num = checkdata()
+    print(f'当前积分: {score}, 总排名: {all_rank}, 错误数: {error_num}, 正确数: {right_num}')
+
+
 if __name__ == '__main__':
-    tasks()
+    parser = argparse.ArgumentParser(description='Another script for University Task.')
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('-r', '--rank', action='store_true')
+    group.add_argument('-a', '--answer', action='store_true')
+
+    args = parser.parse_args()
+    if args.rank:
+        rank()
+    elif args.answer:
+        answers()
+    else:
+        parser.print_help()
+

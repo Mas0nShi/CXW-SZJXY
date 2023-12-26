@@ -1,9 +1,11 @@
 import time
 from enum import IntEnum
 
+
 class UserStatus(IntEnum):
     NEED_CREDIT = 1
     ANSWERED = 2
+
 
 class OptionType(IntEnum):
     RADIO = 1
@@ -23,6 +25,7 @@ class AnswerInfo:
     # after submit
     score: int = 0
     accuracy: int = 0
+
     # problem_num: int
     # problem_score: int
 
@@ -99,6 +102,7 @@ class QA:
 
 if __name__ == '__main__':
     from pprint import pprint
+
     info = {
         "userstatus": 0,
         "answer_id": 1,

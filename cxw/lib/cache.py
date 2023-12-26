@@ -30,7 +30,8 @@ class Cache:
         # 时间戳 to datetime
         start = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(start))
         end = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(end))
-        # title text, url text, answertitle text, expired bool, start datetime, end datetime, userstatus int, answer_id int, score int, accuracy int
+        # title text, url text, answertitle text, expired bool, start datetime, end datetime, userstatus int,
+        # answer_id int, score int, accuracy int
         self.cursor.execute('INSERT INTO cache VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                             (title, url, answertitle, expired, start, end, userstatus, answer_id, score, accuracy))
         self.conn.commit()

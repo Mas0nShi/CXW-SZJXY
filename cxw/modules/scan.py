@@ -16,6 +16,7 @@ def scan_action_entry(channel_id, list_count=0):
     # recursive
     return scan_action_entry(channel_id, list_count + len(articles))
 
+
 if __name__ == '__main__':
     from cxw.modules.location import get_channel_id
     u = scan_action_entry(get_channel_id())

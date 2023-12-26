@@ -14,6 +14,7 @@ def _lark_sign():
     sign = base64.b64encode(hmac_code).decode('utf-8')
     return sign, timestamp
 
+
 class Lark:
     def __init__(self, webhook, secret):
         self.webhook = webhook

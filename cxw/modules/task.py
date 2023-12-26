@@ -105,7 +105,7 @@ def _public_front_action(url):
         params={'m': 'public', 'subm': 'front'})
     assert req.status_code == 200, 'Get public info failed'
     j = req.json()
-    assert j['code'] == 3001 and j['status'] == True, 'Get public info failed'
+    assert j['code'] == 3001 and j['status'] is True, 'Get public info failed'
 
 
 def valid(title: str, url: str) -> AnswerInfo:
@@ -144,7 +144,7 @@ def get_task_lists() -> [AnswerInfo]:
 
         # 文章是否有答题板块, 如果没有直接记录到缓存数据库中
         if not _need_to_answer(content):
-            db.set(title, url, expired=False)  # 没有答题板块
+            db.set(title, url, expired=False, answertitle='无需答题')
             continue
         # 是否在答题有效时间内且未答过题
         soup = BeautifulSoup(content, 'html.parser')
@@ -169,7 +169,7 @@ def _act_statistics(url):
     :param url:
     :return:
     """
-    # https://fatzqg2w.act.tmuact.com/activity/api.php?m=public&subm=actstatistics&q=YunSLftQ2&account_id=63e315d451e9ec2780d8998e&session_id=642bc57daeb7b80001a0b63b&type=answer
+    # https://***.act.tmuact.com/activity/api.php?m=public&subm=actstatistics&q=YunSLftQ2&account_id=***&session_id=***&type=answer
     p = urlparse(url)
     assert p, 'Get url failed'
     q = parse_qs(urlparse(p.fragment).query)
@@ -185,6 +185,7 @@ def _act_statistics(url):
     j = req.json()
     assert j['code'] == 3001, 'Get actstatistics failed'
 
+
 def _ranking_list(url, answer_id):
     """
     TODO: 无实际用途
@@ -192,7 +193,7 @@ def _ranking_list(url, answer_id):
     :param answer_id:
     :return:
     """
-    # https://fatzqg2w.act.tmuact.com/activity/api.php?m=front&subm=answer&action=rankinglist&page=1&answer_id=1995
+    # https://fatzqg2w.act.tmuact.com/activity/api.php?m=front&subm=answer&action=rankinglist&page=1&answer_id=***
     p = urlparse(url)
     assert p, 'Get url failed'
     req = customRequest.get(
@@ -204,6 +205,7 @@ def _ranking_list(url, answer_id):
     j = req.json()
     assert j['code'] == 3001, 'Get answers failed'
     return j['data']['list']
+
 
 def answer_info(ans: AnswerInfo):
     p = urlparse(ans.url)
@@ -219,6 +221,7 @@ def answer_info(ans: AnswerInfo):
     qa_lists = j['data']['list']
     for qa in qa_lists:
         yield QA(qa)
+
 
 def submit_answers(ans: AnswerInfo, qas: [QA]) -> (int, int):
     """
@@ -248,6 +251,7 @@ def submit_answers(ans: AnswerInfo, qas: [QA]) -> (int, int):
     j = req.json()
     assert j['code'] == 3001, 'Submit answers failed'
     return j['data']['right'], j['data']['id']
+
 
 @db.record
 def answer_result(ans: AnswerInfo, result_id) -> AnswerInfo:
@@ -281,7 +285,7 @@ def checkdata() -> (int, int, int, int):
     from hashlib import sha256
     timestamp = str(int(time.time() * 1000))
     signature = sha256(f"{DEVICE_ID}&&{timestamp}&&MJ<?TH4&9w^".encode()).hexdigest()
-    req = customRequest.post('https://ser-html5.8531.cn/pro_personal/',
+    req = customRequest.post('https://chaoyin.8531.cn/pro_personal/',
                              params={'m': 'api', 'subm': 'checksystem', 'action': 'getuserdata'},
                              data={
                                  'account_id': ACCOUNT_ID,
